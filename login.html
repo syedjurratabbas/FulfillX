@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FulfillX | Access the Bridge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #09090b; 
+            color: #fafafa; 
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden; 
+        }
+
+        .grid-bg { 
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(34, 197, 94, 0.05) 1px, transparent 0); 
+            background-size: 40px 40px; 
+            z-index: -1;
+        }
+
+        .hero-glow { 
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(34, 197, 94, 0.12) 0%, rgba(9, 9, 11, 0) 70%); 
+            z-index: -1;
+        }
+
+        .glass-card { 
+            background: rgba(12, 12, 14, 0.7); 
+            border: 1px solid rgba(63, 63, 70, 0.4); 
+            backdrop-filter: blur(20px); 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        
+        .input-style {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(63, 63, 70, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-style:focus { 
+            border-color: #22c55e; 
+            background: rgba(34, 197, 94, 0.05);
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.15); 
+            outline: none; 
+        }
+
+        /* Access Denied Shake */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        .error-shake { animation: shake 0.2s ease-in-out 0s 2; border-color: #ef4444 !important; }
+        
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .animate-up { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+    <div class="hero-glow"></div>
+
+    <a href="index.html" class="absolute top-10 left-10 flex items-center gap-3 group">
+        <div class="w-8 h-8 bg-[#22c55e] rounded-lg flex items-center justify-center transition-transform group-hover:scale-110">
+            <i data-lucide="zap" class="text-black w-5 h-5"></i>
+        </div> 
+        <span class="text-xl font-black tracking-tighter">FulfillX</span>
+    </a>
+
+    <div class="w-full max-w-[460px] px-6 animate-up">
+        <div id="login-card" class="glass-card rounded-[40px] p-10 relative overflow-hidden border border-zinc-800">
+            
+            <div class="mb-10 text-center md:text-left">
+                <h1 class="text-3xl font-black tracking-tight text-white mb-2 uppercase">Initialize Bridge</h1>
+                <p id="status-text" class="text-zinc-500 text-sm font-bold uppercase tracking-widest opacity-80">Encryption: 256-Bit AES</p>
+            </div>
+
+            <form id="auth-form" class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-black text-zinc-500 uppercase tracking-[0.25em] mb-3 block ml-1">Terminal Identifier</label>
+                    <div class="relative group">
+                        <i data-lucide="shield-check" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600 group-focus-within:text-[#22c55e] transition-colors"></i>
+                        <input type="text" id="username" placeholder="test" required
+                            class="input-style w-full p-5 pl-14 rounded-2xl text-white text-sm font-bold placeholder:text-zinc-800 tracking-tight">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between mb-3 ml-1">
+                        <label class="text-[10px] font-black text-zinc-500 uppercase tracking-[0.25em]">Secure Access Key</label>
+                    </div>
+                    <div class="relative group">
+                        <i data-lucide="key-round" class="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-600 group-focus-within:text-[#22c55e] transition-colors"></i>
+                        <input type="password" id="password" placeholder="test123" required
+                            class="input-style w-full p-5 pl-14 rounded-2xl text-white text-sm font-bold placeholder:text-zinc-800 tracking-widest">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between px-1">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox" class="w-5 h-5 rounded-lg border-zinc-800 bg-zinc-900 checked:bg-green-500 transition-all appearance-none checked:ring-2 ring-green-500/20 ring-offset-2 ring-offset-[#09090b] border flex items-center justify-center after:content-['✓'] after:hidden checked:after:block after:text-black after:text-[12px] after:font-bold">
+                        <span class="text-[11px] font-black text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition">Trust Terminal</span>
+                    </label>
+                </div>
+
+                <button type="submit" id="submit-btn"
+                    class="w-full bg-[#22c55e] text-black font-black py-5 rounded-2xl text-sm uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_15px_40px_rgba(34,197,94,0.2)] mt-4">
+                    Authenticate
+                </button>
+            </form>
+
+            <div class="mt-12 pt-8 border-t border-zinc-800/50 text-center">
+                <p class="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Unauthorized Access Prohibited</p>
+            </div>
+        </div>
+
+        <div class="mt-8 flex justify-between items-center px-4">
+            <div class="flex items-center gap-3">
+                <div class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </div>
+                <span class="text-[10px] font-black text-zinc-600 uppercase tracking-[0.3em] leading-none">Bridge Active</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const form = document.getElementById('auth-form');
+        const card = document.getElementById('login-card');
+        const statusText = document.getElementById('status-text');
+        const btn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Reset UI state
+            card.classList.remove('error-shake');
+            btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin mx-auto"></i>';
+            lucide.createIcons();
+
+            setTimeout(() => {
+                if (user === 'test' && pass === 'test123') {
+                    // Success logic
+                    statusText.innerText = "ACCESS GRANTED. REDIRECTING...";
+                    statusText.classList.remove('text-zinc-500');
+                    statusText.classList.add('text-green-500');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 800);
+                } else {
+                    // Failure logic
+                    btn.innerText = "AUTHENTICATE";
+                    card.classList.add('error-shake');
+                    statusText.innerText = "ACCESS DENIED: INVALID KEY";
+                    statusText.classList.remove('text-zinc-500');
+                    statusText.classList.add('text-red-500');
+                    
+                    // Reset text after a bit
+                    setTimeout(() => {
+                        statusText.innerText = "Encryption: 256-Bit AES";
+                        statusText.classList.add('text-zinc-500');
+                        statusText.classList.remove('text-red-500');
+                        card.classList.remove('error-shake');
+                    }, 2000);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
